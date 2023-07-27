@@ -8,6 +8,7 @@ list1 = []
 list_wave = []
 list_wave_max = []
 list_amp = []
+list_pos_amp = []
 for line in f:
     line=line.strip()
     nums=line.split()
@@ -41,6 +42,7 @@ if float(list1[0][1])<0:
         for x in list_wave:
             list_wave_max.append(abs(float(x[1])))
         maxi = max(list_wave_max)
+        list_pos_amp.append(maxi)
         for x in list_wave:
             if abs(float(x[1])) == maxi:
                 x[0] = float(x[0])
@@ -60,6 +62,7 @@ else:
         for x in list_wave:
             list_wave_max.append(abs(float(x[1])))
         maxi = max(list_wave_max)
+        list_post_amp.append(maxi)
         for x in list_wave:
             if abs(float(x[1])) == maxi:
                 x[0] = float(x[0])
