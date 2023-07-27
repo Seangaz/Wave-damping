@@ -1,6 +1,7 @@
 from statistics import mean
 import numpy as np
 from scipy.optimize import curve_fit
+import math
 f=open("Desktop/sample-data2.txt", "r")
 f2=open("Desktop/times.txt", "w")
 f3=open("Desktop/amplitudes.txt", "w")
@@ -42,12 +43,12 @@ if float(list1[0][1])<0:
         for x in list_wave:
             list_wave_max.append(abs(float(x[1])))
         maxi = max(list_wave_max)
-        list_pos_amp.append(maxi)
         for x in list_wave:
             if abs(float(x[1])) == maxi:
                 x[0] = float(x[0])
                 x[1] = abs(float(x[1]))
                 list_amp.append(x)
+                list_pos_amp.append(x)
         for x in list_wave:
             list1.remove(x)
         list_wave.clear()
@@ -62,12 +63,12 @@ else:
         for x in list_wave:
             list_wave_max.append(abs(float(x[1])))
         maxi = max(list_wave_max)
-        list_post_amp.append(maxi)
         for x in list_wave:
             if abs(float(x[1])) == maxi:
                 x[0] = float(x[0])
                 x[1] = abs(float(x[1]))
                 list_amp.append(x)
+                list_pos_amp.append(x)
         for x in list_wave:
             list1.remove(x)
         list_wave.clear()
@@ -131,6 +132,37 @@ def func(x, a):
     return a/x
 popt, pcov=curve_fit(func, x_data, y_data)
 print("The 'a' value of best fit function is: "+str(round(popt[0], 6)))
+for x in list_pos_amp:
+    x[1]=float(x[1])
+    x[1]="{:f}".format(x[1])
+def log_dec(min, max):
+    l_range_amps=[]
+    l_log_dec=[]
+    for x in list_pos_amp:
+        if x[0]>min and x[0]<=max:
+            l_range_amps.append(x[1])
+    for i in range(len(l_range_amps)-1):
+        if l_range_amps[i]>l_range_amps[i+1]:
+            l_log_dec.append(math.log(float(l_range_amps[i])/float(l_range_amps[i+1])))
+    return mean(l_log_dec)
+log_dec_1=log_dec(0, 0.1)
+log_dec_2=log_dec(0.1, 0.2)
+log_dec_3=log_dec(0.2, 0.3)
+log_dec_4=log_dec(0.3, 0.4)
+log_dec_5=log_dec(0.4, 0.5)
+log_dec_6=log_dec(0.5, 0.6)
+log_dec_7=log_dec(0.6, 0.7)
+log_dec_8=log_dec(0.7, 0.8)
+log_dec_9=log_dec(0.8, 0.9)
+log_dec_10=log_dec(0.9, 1)
+l_log_decs=[log_dec_1, log_dec_2, log_dec_3, log_dec_4, log_dec_5, log_dec_6, log_dec_7, log_dec_8, log_dec_9, log_dec_10]
+ave_log_dec=mean(l_log_decs)
+print("The average δ is: "+str(round(ave_log_dec, 6)))
+def zeta(log_dec):
+    zeta=log_dec/(math.sqrt(4*pow(math.pi, 2)+pow(log_dec, 2)))
+    return zeta
+ave_zeta=zeta(ave_log_dec)
+print("The average ζ is: "+str(round(ave_zeta, 6)))
 f.close()
 f2.close()
 f3.close()
