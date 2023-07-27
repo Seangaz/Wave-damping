@@ -1,4 +1,6 @@
 from statistics import mean
+import numpy as np
+from scipy.optimize import curve_fit
 f=open("Desktop/sample-data2.txt", "r")
 f2=open("Desktop/times.txt", "w")
 f3=open("Desktop/amplitudes.txt", "w")
@@ -96,7 +98,6 @@ def ave(num1, num2):
         if num1 < float(x[0]) <= num2:
             list_.append(float(x[1]))
     ave = mean(list_)
-    list_.clear()
     return ave
 ave1 = ave(0, 0.1)
 ave2 = ave(0.1, 0.2)
@@ -109,13 +110,24 @@ ave8 = ave(0.7, 0.8)
 ave9 = ave(0.8, 0.9)
 ave10 = ave(0.9, 1)
 l=[ave1, ave2, ave3, ave4, ave5, ave6, ave7, ave8, ave9, ave10]
+x_data=[]
 f4=open("Desktop/ave_time.txt", "w")
 f5=open("Desktop/ave_amp.txt", "w")
 num=0.05
 for i in range(10):
     f4.write(str(num)+"\n")
     f5.write(str(l[i])+"\n")
+    x_data.append(num)
     num+=0.10
+x_data=np.array(x_data)
+y_data=[]
+for obj in l:
+    y_data.append(obj)
+y_data=np.array(y_data)
+def func(x, a):
+    return a/x
+popt, pcov=curve_fit(func, x_data, y_data)
+print("The 'a' value of best fit function is: "+str(round(popt[0], 6)))
 f.close()
 f2.close()
 f3.close()
