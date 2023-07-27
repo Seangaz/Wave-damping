@@ -3,8 +3,6 @@ import numpy as np
 from scipy.optimize import curve_fit
 import math
 f=open("Desktop/sample-data2.txt", "r")
-f2=open("Desktop/times.txt", "w")
-f3=open("Desktop/amplitudes.txt", "w")
 list1 = []
 list_wave = []
 list_wave_max = []
@@ -94,8 +92,6 @@ else:
         list_wave_max.clear()
 for x in list_amp:
     x[1]="{:f}".format(x[1])
-    f2.write(str(x[0])+"\n")
-    f3.write(str(x[1])+"\n")
 def ave(num1, num2):
     list_=[]
     for x in list_amp:
@@ -115,12 +111,8 @@ ave9 = ave(0.8, 0.9)
 ave10 = ave(0.9, 1)
 l=[ave1, ave2, ave3, ave4, ave5, ave6, ave7, ave8, ave9, ave10]
 x_data=[]
-f4=open("Desktop/ave_time.txt", "w")
-f5=open("Desktop/ave_amp.txt", "w")
 num=0.05
 for i in range(10):
-    f4.write(str(num)+"\n")
-    f5.write(str(l[i])+"\n")
     x_data.append(num)
     num+=0.10
 x_data=np.array(x_data)
@@ -164,7 +156,3 @@ def zeta(log_dec):
 ave_zeta=zeta(ave_log_dec)
 print("The average ζ is: "+str(round(ave_zeta, 6)))
 f.close()
-f2.close()
-f3.close()
-f4.close()
-f5.close()
