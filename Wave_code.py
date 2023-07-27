@@ -2,7 +2,7 @@ from statistics import mean
 import numpy as np
 from scipy.optimize import curve_fit
 import math
-f=open("Desktop/sample-data2.txt", "r")
+f=open("Desktop/sample-data.txt", "r")
 list1 = []
 list_wave = []
 list_wave_max = []
