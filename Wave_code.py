@@ -2,7 +2,7 @@ from statistics import mean
 import numpy as np
 from scipy.optimize import curve_fit
 import math
-f=open("Desktop/sample-data.txt", "r")
+f=open("Desktop/sample-data5.txt", "r")
 list1 = []
 list_wave = []
 list_wave_max = []
@@ -90,8 +90,16 @@ else:
             list1.remove(x)
         list_wave.clear()
         list_wave_max.clear()
+lis=[]
 for x in list_amp:
     x[1]="{:f}".format(x[1])
+    lis.append(x[1])
+maxim=max(lis)
+for x in list_amp:
+    if x[1]==maxim:
+        maximum=x
+print("Max amplitude: "+str(maximum[1]))
+
 def ave(num1, num2):
     list_=[]
     for x in list_amp:
@@ -123,7 +131,7 @@ y_data=np.array(y_data)
 def func(x, a):
     return a/x
 popt, pcov=curve_fit(func, x_data, y_data)
-print("The 'a' value of best fit function is: "+str(round(popt[0], 6)))
+print("Average 'a' value of best fit function: "+str(round(popt[0], 6)))
 for x in list_pos_amp:
     x[1]=float(x[1])
     x[1]="{:f}".format(x[1])
@@ -149,10 +157,10 @@ log_dec_9=log_dec(0.8, 0.9)
 log_dec_10=log_dec(0.9, 1)
 l_log_decs=[log_dec_1, log_dec_2, log_dec_3, log_dec_4, log_dec_5, log_dec_6, log_dec_7, log_dec_8, log_dec_9, log_dec_10]
 ave_log_dec=mean(l_log_decs)
-print("The average δ is: "+str(round(ave_log_dec, 6)))
+print("Average δ: "+str(round(ave_log_dec, 6)))
 def zeta(log_dec):
     zeta=log_dec/(math.sqrt(4*pow(math.pi, 2)+pow(log_dec, 2)))
     return zeta
 ave_zeta=zeta(ave_log_dec)
-print("The average ζ is: "+str(round(ave_zeta, 6)))
+print("Average ζ: "+str(round(ave_zeta, 6)))
 f.close()
