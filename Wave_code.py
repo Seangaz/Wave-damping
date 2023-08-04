@@ -90,16 +90,8 @@ else:
             list1.remove(x)
         list_wave.clear()
         list_wave_max.clear()
-lis=[]
 for x in list_amp:
     x[1]="{:f}".format(x[1])
-    lis.append(x[1])
-maxim=max(lis)
-for x in list_amp:
-    if x[1]==maxim:
-        maximum=x
-print("Max amplitude: "+str(maximum[1]))
-
 def ave(num1, num2):
     list_=[]
     for x in list_amp:
